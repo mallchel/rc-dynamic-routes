@@ -1,4 +1,4 @@
-import { matchPath } from 'react-router';
+import { matchPath } from 'react-router-dom';
 
 import { memoize } from './memoize';
 import { IAbsoluteRoutesConfig } from './types';
@@ -26,22 +26,20 @@ export const getRouteParams = ({ location, routes = absoluteRoutes }: GetRoutePa
 };
 
 export const getLink = (
-    route: { path: string },
+    route: { path: string; defaultValue?: string | number },
     params: { [key: string]: string | number } = {},
     location?: { pathname?: string }
 ) => {
-    const { match, route: _route } = getRouteParams({ location }) || {
+    const { match } = getRouteParams({ location }) || {
         match: { params: {} },
-        route: { path: '' },
     };
-    route = route || _route;
 
     return route.path
         .split('/')
         .map(path => {
             if (path[0] === ':') {
                 const paramName = path.slice(1);
-                return params[paramName] || match.params[paramName];
+                return params[paramName] || match.params[paramName] || route.defaultValue;
             }
 
             return path;

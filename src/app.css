@@ -1,0 +1,35 @@
+div#root {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containers-wrapper {
+    width: 60%;
+}
+
+._activeClassName {
+    color: green;
+}
+
+nav > a {
+    margin: 10px 0;
+}
+
+nav > a {
+    display: block;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+.component-container {
+    border: 1px solid #bbbb8b;
+    margin-bottom: 20px;
+}
+
+.component-container:before {
+    content: "I'm a Container";
+    display: block;
+    margin-bottom: 10px;
+}

@@ -8,7 +8,7 @@ export const memoize = (fn: Function) => {
             return cachedValue;
         }
 
-        const result = fn(args);
+        const result = fn(...args);
 
         cache.set(args, result);
         return result;
