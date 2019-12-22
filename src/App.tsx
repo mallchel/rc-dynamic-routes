@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
-import { createAbsoluteRoutes, getLink } from './lib';
+import { createAbsoluteRoutes, getLink } from './modules';
 import { relativeRoutes } from './routesConfig';
 
 import './app.css';
