@@ -5,6 +5,13 @@
     "files": [
         "lib"
     ],
+    "keywords": [
+        "react router",
+        "router",
+        "dynamic router",
+        "dynamic link",
+        "get route params"
+    ],
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
