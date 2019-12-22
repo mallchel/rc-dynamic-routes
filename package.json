@@ -1,7 +1,6 @@
 {
     "name": "rc-dymanic-routes",
     "version": "0.1.0",
-    "private": true,
     "dependencies": {},
     "files": [
         "lib"

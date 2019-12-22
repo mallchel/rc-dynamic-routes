@@ -30,7 +30,6 @@ export const getLink = (
     params: { [key: string]: string | number } = {},
     location?: { pathname?: string }
 ) => {
-    console.log(route);
     const { match } = getRouteParams({ location }) || {
         match: { params: {} },
     };
