@@ -26,10 +26,11 @@ export const getRouteParams = ({ location, routes = absoluteRoutes }: GetRoutePa
 };
 
 export const getLink = (
-    route: { path: string; defaultValue?: string | number },
+    route: { path: string; defaultValues?: { [key: string]: any } },
     params: { [key: string]: string | number } = {},
     location?: { pathname?: string }
 ) => {
+    console.log(route);
     const { match } = getRouteParams({ location }) || {
         match: { params: {} },
     };
@@ -39,7 +40,11 @@ export const getLink = (
         .map(path => {
             if (path[0] === ':') {
                 const paramName = path.slice(1);
-                return params[paramName] || match.params[paramName] || route.defaultValue;
+                return (
+                    params[paramName] ||
+                    match.params[paramName] ||
+                    (route.defaultValues ? route.defaultValues[paramName] : '')
+                );
             }
 
             return path;

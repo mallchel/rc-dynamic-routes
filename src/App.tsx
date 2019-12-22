@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
-import { createAbsoluteRoutes, getLink } from './modules';
+import { createAbsoluteRoutes, getLink, getRouteParams } from './modules';
 import { relativeRoutes } from './routesConfig';
 
 import './app.css';
 
 const absoluteRoutes = createAbsoluteRoutes(relativeRoutes);
 
-console.log(11, absoluteRoutes);
+console.log(
+    getLink(absoluteRoutes.filters, { filterId: 33 }, window.location),
+    getRouteParams({ location: window.location })
+);
 function App() {
     return (
         <BrowserRouter>

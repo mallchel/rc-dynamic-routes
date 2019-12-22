@@ -27,7 +27,13 @@ export const relativeRoutes: IRelativeRoutesConfig = {
         parent: 'companies',
         path: '/:companyId',
         component: () => <TestComponent name={'Company'} />,
-        defaultValue: 0,
+        defaultValues: { companyId: '$defaultValue' },
+    },
+    filters: {
+        parent: 'company',
+        path: '/filters/:filterId',
+        component: () => <TestComponent name={'Filter'} />,
+        defaultValues: { filterId: '0' },
     },
     // companyEdit: {
     //     parent: 'companies',
