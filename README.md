@@ -1,3 +1,6 @@
+# Get dynamic links and paths
+This library has helpers for creating dynamic route links and route paths, without hard coding
+
 ## Preparing - generate your routes config
 ```ts
 const relativeRoutes: IRelativeRoutesConfig = {
