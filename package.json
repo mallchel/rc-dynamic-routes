@@ -1,5 +1,5 @@
 {
-    "name": "rc-dymanic-routes",
+    "name": "rc-dynamic-routes",
     "version": "0.1.1",
     "dependencies": {},
     "main": "lib",
