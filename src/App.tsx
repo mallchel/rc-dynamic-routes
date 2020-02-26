@@ -21,7 +21,7 @@ function App() {
                     return (
                         <NavLink
                             key={absoluteConfig.path}
-                            to={getLink(absoluteConfig, { leadId: 111, userId: 222 }, window.location)}
+                            to={getLink(absoluteConfig)}
                             activeClassName={'_activeClassName'}
                         >
                             {routeKey}

@@ -48,7 +48,12 @@ export const relativeRoutes: IRelativeRoutesConfig = {
 
     // users
     users: { parent: 'company', path: '/users', component: () => <TestComponent name={'Users'} /> },
-    userEdit: { parent: 'users', path: '/edit/:userId', component: () => <TestComponent name={'UserEdit'} /> },
+    userEdit: {
+        parent: 'users',
+        path: '/edit/:userId',
+        defaultValues: { userId: '0' },
+        component: () => <TestComponent name={'UserEdit'} />,
+    },
     userCreate: { parent: 'users', path: '/create', component: () => <TestComponent name={'UserEdit'} /> },
 
     // // clients
