@@ -5,7 +5,7 @@ export const absoluteRoutes: IAbsoluteRoutesConfig = {};
 const createAbsoluteRoutes = (relativeRoutes: IRelativeRoutesConfig): IAbsoluteRoutesConfig => {
     const getRoute = (
         routeName: string
-    ): { component: ComponentType; path: string; defaultValues: { [key: string]: any } } => {
+    ): { component?: ComponentType; path: string; defaultValues: { [key: string]: any } } => {
         const route = relativeRoutes[routeName];
         const parentRoute = route.parent ? getRoute(route.parent) : { path: null, defaultValues: {} };
 
@@ -17,7 +17,7 @@ const createAbsoluteRoutes = (relativeRoutes: IRelativeRoutesConfig): IAbsoluteR
         };
     };
 
-    Object.keys(relativeRoutes).forEach(routeName => {
+    Object.keys(relativeRoutes).forEach((routeName) => {
         absoluteRoutes[routeName] = getRoute(routeName);
     });
 
