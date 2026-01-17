@@ -27,9 +27,3 @@ nav {
     border: 1px solid #bbbb8b;
     margin-bottom: 20px;
 }
-
-.component-container:before {
-    content: "I'm a Container";
-    display: block;
-    margin-bottom: 10px;
-}

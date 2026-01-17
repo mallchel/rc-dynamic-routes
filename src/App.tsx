@@ -1,43 +1,58 @@
 import React from 'react';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, NavLink, Outlet } from 'react-router';
 
-import { createAbsoluteRoutes, getLink, getRouteParams } from './modules';
-import { relativeRoutes } from './routesConfig';
+import { createRoutes, getLink, getRouteParams } from './modules';
+import { routes } from './routesConfig';
 
 import './app.css';
 
-const absoluteRoutes = createAbsoluteRoutes(relativeRoutes);
+// New API: pass routes in react-router format, get absoluteRoutes Map for getLink
+const { absoluteRoutes, routerRoutes } = createRoutes(routes);
 
+console.log('absoluteRoutes:', absoluteRoutes);
+console.log('routerRoutes:', routerRoutes);
 console.log(
-    getLink(absoluteRoutes.filters, { filterId: 33 }, window.location),
+    'getLink example:',
+    getLink(absoluteRoutes.get('filters')!, { filterId: 33 }, window.location),
     getRouteParams({ location: window.location })
 );
-function App() {
+
+// Layout component with navigation
+function Layout() {
     return (
-        <BrowserRouter>
+        <>
             <nav>
-                {Object.keys(absoluteRoutes).map(routeKey => {
-                    const absoluteConfig = absoluteRoutes[routeKey];
+                {[...absoluteRoutes.keys()].map(routeKey => {
+                    const absoluteConfig = absoluteRoutes.get(routeKey)!;
                     return (
                         <NavLink
                             key={absoluteConfig.path}
                             to={getLink(absoluteConfig)}
-                            activeClassName={'_activeClassName'}
+                            className={({ isActive }) => isActive ? '_activeClassName' : ''}
                         >
                             {routeKey}
                         </NavLink>
                     );
                 })}
             </nav>
-
             <div className={'containers-wrapper'}>
-                {Object.keys(absoluteRoutes).map(routeKey => {
-                    const { path, component } = absoluteRoutes[routeKey];
-                    return <Route key={path} path={path} component={component} />;
-                })}
+                <Outlet />
             </div>
-        </BrowserRouter>
+        </>
     );
+}
+
+// Create router - routerRoutes is the same as input, ready for createBrowserRouter
+const router = createBrowserRouter([
+    {
+        path: '/',
+        Component: Layout,
+        children: routerRoutes
+    },
+]);
+
+function App() {
+    return <RouterProvider router={router} />;
 }
 
 export default App;

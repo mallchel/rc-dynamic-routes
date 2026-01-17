@@ -1,18 +1,17 @@
-import { matchPath } from 'react-router-dom';
+import { matchPath } from 'react-router';
 
 import { memoize } from './memoize';
-import { IAbsoluteRoutesConfig } from './types';
+import { IAbsoluteRoutesMap } from './types';
 
 import { absoluteRoutes } from './createAbsoluteRoutes';
 
-const _getRouteParams = (routes: IAbsoluteRoutesConfig) =>
+const _getRouteParams = (routes: IAbsoluteRoutesMap) =>
     memoize((pathname: string) => {
-        for (let key in routes) {
-            const route = routes[key];
-            const match = matchPath(pathname, {
-                path: route.path,
-                exact: true,
-            });
+        for (const [key, route] of routes) {
+            const match = matchPath(
+                { path: route.path, end: true },
+                pathname
+            );
 
             if (match) {
                 return { route, match };
@@ -20,9 +19,9 @@ const _getRouteParams = (routes: IAbsoluteRoutesConfig) =>
         }
     });
 
-type GetRouteParamsArgsType = { location?: { pathname?: string }; routes?: {} };
+type GetRouteParamsArgsType = { location?: { pathname?: string }; routes?: IAbsoluteRoutesMap };
 export const getRouteParams = ({ location, routes = absoluteRoutes }: GetRouteParamsArgsType) => {
-    return location ? _getRouteParams(routes)(location.pathname) : null;
+    return location?.pathname ? _getRouteParams(routes)(location.pathname) : null;
 };
 
 export const getLink = (

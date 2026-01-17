@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
+        "strict": true,
         "esModuleInterop": true,
-        "jsx": "preserve",
+        "jsx": "react",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
         "skipLibCheck": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
         "outDir": "lib"
     },
     "include": ["src/modules"],

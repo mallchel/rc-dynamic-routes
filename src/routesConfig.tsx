@@ -1,80 +1,57 @@
 import React from 'react';
-import { IRelativeRoutesConfig } from './modules/types';
+import { Outlet } from 'react-router';
+import { IRouteConfig } from './modules/types';
 
+// Component for routes WITH children - renders Outlet
+const LayoutComponent = ({ name }: { name: string }) => (
+    <div className={'component-container'}>
+        {name}
+        <Outlet />
+    </div>
+);
+
+// Component for leaf routes (no children)
 const TestComponent = ({ name }: { name: string }) => <div className={'component-container'}>{name}</div>;
-export const relativeRoutes: IRelativeRoutesConfig = {
-    // login
-    // login: { path: '/login', component: () => <TestComponent name={'Login'} /> },
 
-    // leads
-    // leads: { path: '/leads', component: () => <TestComponent name={'Leads'} /> },
-    // leadEdit: { parent: 'leads', path: '/edit/:leadId', component: () => <TestComponent name={'LeadEdit'} /> },
-    // leadCreate: { parent: 'leads', path: '/create', component: () => <TestComponent name={'LeadCreate'} /> },
-    // leadsProcessing: {
-    //     parent: 'leads',
-    //     path: '/processing',
-    //     component: () => <TestComponent name={'LeadsProcessing'} />,
-    // },
-
-    // deals
-    // deals: { path: '/deals', component: () => <TestComponent name={'Deals'} /> },
-    // dealEdit: { parent: 'deals', path: '/edit/:dealId', component: () => <TestComponent name={'DealEdit'} /> },
-    // dealCreate: { parent: 'deals', path: '/create', component: () => <TestComponent name={'DealCreate'} /> },
-
-    // companies
-    companies: { path: '/companies', component: () => <TestComponent name={'Companies'} /> },
-    company: {
-        parent: 'companies',
-        path: '/:companyId',
-        component: () => <TestComponent name={'Company'} />,
-        defaultValues: { companyId: '$defaultValue' },
+export const routes = [
+    {
+        id: 'companies',
+        path: '/companies',
+        Component: () => <LayoutComponent name={'Companies'} />,  // Has children → needs Outlet
+        children: [
+            {
+                id: 'company',
+                path: ':companyId',
+                Component: () => <LayoutComponent name={'Company'} />,  // Has children → needs Outlet
+                defaultValues: { companyId: '$defaultValue' },
+                children: [
+                    {
+                        id: 'filters',
+                        path: 'filters/:filterId',
+                        Component: () => <TestComponent name={'Filter'} />,  // Leaf route
+                        defaultValues: { filterId: '0' },
+                    },
+                    {
+                        id: 'users',
+                        path: 'users',
+                        Component: () => <LayoutComponent name={'Users'} />,  // Has children → needs Outlet
+                        children: [
+                            {
+                                id: 'userEdit',
+                                path: 'edit/:userId',
+                                Component: () => <TestComponent name={'UserEdit'} />,  // Leaf route
+                                defaultValues: { userId: '0' },
+                            },
+                            {
+                                id: 'userCreate',
+                                path: 'create',
+                                Component: () => <TestComponent name={'UserCreate'} />,  // Leaf route
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     },
-    filters: {
-        parent: 'company',
-        path: '/filters/:filterId',
-        component: () => <TestComponent name={'Filter'} />,
-        defaultValues: { filterId: '0' },
-    },
-    // companyEdit: {
-    //     parent: 'companies',
-    //     path: '/edit/:companyId',
-    //     component: () => <TestComponent name={'CompanyEdit'} />,
-    // },
-    // companyCreate: {
-    //     parent: 'companies',
-    //     path: '/create',
-    //     component: () => <TestComponent name={'CompanyEdit'} />,
-    // },
+];
 
-    // users
-    users: { parent: 'company', path: '/users', component: () => <TestComponent name={'Users'} /> },
-    userEdit: {
-        parent: 'users',
-        path: '/edit/:userId',
-        defaultValues: { userId: '0' },
-        component: () => <TestComponent name={'UserEdit'} />,
-    },
-    userCreate: { parent: 'users', path: '/create', component: () => <TestComponent name={'UserEdit'} /> },
-
-    // // clients
-    // clients: { path: '/clients', component: () => <TestComponent name={'Clients'} /> },
-    // clientEdit: {
-    //     parent: 'clients',
-    //     path: '/edit/:clientId',
-    //     component: () => <TestComponent name={'ClientEdit'} />,
-    // },
-    // clientCreate: {
-    //     parent: 'clients',
-    //     path: '/create',
-    //     component: () => <TestComponent name={'ClientEdit'} />,
-    // },
-
-    // // profile
-    // profile: { path: '/profile', component: () => <TestComponent name={'Profile'} /> },
-
-    // // serviceRefresh
-    // serviceRefresh: { path: '/serviceRefresh', component: () => <TestComponent name={'ServiceRefresh'} /> },
-
-    // // Calculator
-    // calculator: { path: '/calculator', component: () => <TestComponent name={'Calculator'} /> },
-};
